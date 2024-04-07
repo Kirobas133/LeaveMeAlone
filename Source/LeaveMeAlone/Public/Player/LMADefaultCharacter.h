@@ -6,6 +6,9 @@
 #include "GameFramework/Character.h"
 #include "LMADefaultCharacter.generated.h"
 
+class UCameraComponent;
+class USpringArmComponent;
+
 UCLASS()
 class LEAVEMEALONE_API ALMADefaultCharacter : public ACharacter
 {
@@ -16,9 +19,17 @@ public:
 	ALMADefaultCharacter();
 
 protected:
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+	USpringArmComponent* SpringArmComponent;
+
+	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "Components")
+	UCameraComponent* CameraComponent;
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
