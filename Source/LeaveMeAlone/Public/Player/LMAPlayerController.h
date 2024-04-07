@@ -1,0 +1,17 @@
+// Created by Kirobas inc. All Rights Reserved.
+
+#pragma once
+
+#include "CoreMinimal.h"
+#include "GameFramework/PlayerController.h"
+#include "LMAPlayerController.generated.h"
+
+/**
+ * 
+ */
+UCLASS()
+class LEAVEMEALONE_API ALMAPlayerController : public APlayerController
+{
+	GENERATED_BODY()
+	
+};
