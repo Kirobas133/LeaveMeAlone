@@ -26,6 +26,15 @@ protected:
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "Components")
 	UCameraComponent* CameraComponent;
 
+	UPROPERTY()
+	UDecalComponent* CurrentCursor = nullptr;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cursor")
+	UMaterialInterface* CursorMaterial = nullptr;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cursor")
+	FVector CursorSize = FVector(20.0f, 40.0f, 40.0f);
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
@@ -37,4 +46,12 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+private:
+
+	float YRotation = -75.0f;
+	float ArmLength = 1400.0f;
+	float FOV = 55.0f;
+
+	void MoveForward(float Value);
+	void MoveRight(float Value);
 };
