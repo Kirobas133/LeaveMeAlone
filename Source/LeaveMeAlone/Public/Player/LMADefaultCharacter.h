@@ -23,6 +23,15 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
 	USpringArmComponent* SpringArmComponent;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
+	float ArmLengthMin = 200.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
+	float ArmLengthMax = 2000.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
+	float ArmLengthChange = 50.0f;
+
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "Components")
 	UCameraComponent* CameraComponent;
 
@@ -34,6 +43,8 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cursor")
 	FVector CursorSize = FVector(20.0f, 40.0f, 40.0f);
+
+
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -52,6 +63,9 @@ private:
 	float ArmLength = 1400.0f;
 	float FOV = 55.0f;
 
+
 	void MoveForward(float Value);
 	void MoveRight(float Value);
+	void CameraZoomIn();
+	void CameraZoomOut();
 };
