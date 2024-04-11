@@ -64,6 +64,28 @@ void ALMADefaultCharacter::Tick(float DeltaTime)
 		}
 	}
 
+	if (Stamina < 100 && !Sprinted)
+	{
+		Stamina += 0.1;
+	}
+	if (Sprinted)
+	{
+		while (Stamina > 0)
+		{
+			Stamina -= 0.3;
+		}
+	}
+	
+	if (Stamina > 0)
+	{
+		CanSprint = true;
+	}
+	else
+	{
+		CanSprint = false;
+		MaxWalkSpeed = 300;
+	}
+
 }
 
 // Called to bind functionality to input
@@ -75,7 +97,7 @@ void ALMADefaultCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	PlayerInputComponent->BindAxis("MoveRight", this, &ALMADefaultCharacter::MoveRight);
 	PlayerInputComponent->BindAction("CameraZoomIn", IE_Pressed, this, &ALMADefaultCharacter::CameraZoomIn);
 	PlayerInputComponent->BindAction("CameraZoomOut", IE_Pressed, this, &ALMADefaultCharacter::CameraZoomOut);
-
+	PlayerInputComponent->BindAction("Sprint", IE_Pressed, this, &ALMADefaultCharacter::Sprinting);
 
 }
 
@@ -101,5 +123,27 @@ void ALMADefaultCharacter::CameraZoomOut() {
 		ArmLength += ArmLengthChange;
 		SpringArmComponent->TargetArmLength = ArmLength;
 	}
+}
+
+void ALMADefaultCharacter::Sprinting() {
+	if (CanSprint && !Sprinted)
+	{
+		MaxWalkSpeed = 600;
+		Sprinted = true;
+	}
+	else
+	{
+		MaxWalkSpeed = 300;
+		Sprinted = false;
+	}
+}
+
+bool ALMADefaultCharacter::SprintedFunc() {
+	if (Sprinted)
+	{
+		return true;
+	}
+	else
+		return false;
 }
 

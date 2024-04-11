@@ -18,6 +18,8 @@ public:
 	// Sets default values for this character's properties
 	ALMADefaultCharacter();
 
+
+
 protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
@@ -32,6 +34,15 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
 	float ArmLengthChange = 50.0f;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
+	float Stamina = 200.0f;
+
+	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "Components")
+	float MaxWalkSpeed = 300.0f;
+
+	UPROPERTY(VisibleAnyWhere, BlueprintReadOnly, Category = "Components")
+	bool Sprinted = false;
+	
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "Components")
 	UCameraComponent* CameraComponent;
 
@@ -57,15 +68,23 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+		UFUNCTION()
+	bool SprintedFunc();
+
 private:
 
 	float YRotation = -75.0f;
 	float ArmLength = 1400.0f;
 	float FOV = 55.0f;
+	bool CanSprint = true;
+	
 
 
 	void MoveForward(float Value);
 	void MoveRight(float Value);
 	void CameraZoomIn();
 	void CameraZoomOut();
+	void Sprinting();
+
+
 };
