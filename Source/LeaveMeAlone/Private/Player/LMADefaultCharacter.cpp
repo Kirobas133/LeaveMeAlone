@@ -107,7 +107,7 @@ void ALMADefaultCharacter::CameraZoomOut() {
 }
 
 void ALMADefaultCharacter::Sprinting() {
-	if (CanSprint && !Sprinted)
+	if (CanSprint && !Sprinted && (FVector::DotProduct(ALMADefaultCharacter::GetVelocity(), ALMADefaultCharacter::GetActorRotation().Vector()) > 0))
 	{
 		//MaxWalkSpeed = 600.0f;
 		GetCharacterMovement()->MaxWalkSpeed = 1200.0f;
