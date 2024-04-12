@@ -55,6 +55,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cursor")
 	FVector CursorSize = FVector(20.0f, 40.0f, 40.0f);
 
+	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "Components")
 	bool CanSprint = true;
 
 

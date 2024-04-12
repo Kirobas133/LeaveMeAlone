@@ -125,29 +125,25 @@ void ALMADefaultCharacter::StaminaLogic() {
 	
 	if (Stamina < 100 && !Sprinted)
 	{
-		Stamina += 0.1;
+		Stamina += 0.3;
 	}
 	if (Sprinted)
 	{
-		while (Stamina > 0)
+		if (Stamina > 0)
 		{
-			Stamina -= 0.5;
+			Stamina = Stamina - 0.5;
+		}
+		else
+		{
+			CanSprint = false;
+			Sprinted = false;
+			GetCharacterMovement()->MaxWalkSpeed = 600.0f;
 		}
 	}
 
 	if (Stamina > 5)
 	{
 		CanSprint = true;
-	}
-	else
-	{
-		CanSprint = false;
-		
-	}
-	if (!CanSprint)
-	{
-		//GetCharacterMovement()->MaxWalkSpeed = 600.0f;
-		Sprinted = false;
 	}
 
 }
