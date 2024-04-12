@@ -7,7 +7,8 @@
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Components/DecalComponent.h"
-//#include "Compoments/InputComponent.h"
+#include "Components/InputComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 // Sets default values
 ALMADefaultCharacter::ALMADefaultCharacter()
@@ -63,28 +64,8 @@ void ALMADefaultCharacter::Tick(float DeltaTime)
 			CurrentCursor->SetWorldLocation(ResultHit.Location);
 		}
 	}
-
-	if (Stamina < 100 && !Sprinted)
-	{
-		Stamina += 0.1;
-	}
-	if (Sprinted)
-	{
-		while (Stamina > 0)
-		{
-			Stamina -= 0.3;
-		}
-	}
 	
-	if (Stamina > 0)
-	{
-		CanSprint = true;
-	}
-	else
-	{
-		CanSprint = false;
-		MaxWalkSpeed = 300;
-	}
+	StaminaLogic();
 
 }
 
@@ -128,22 +109,46 @@ void ALMADefaultCharacter::CameraZoomOut() {
 void ALMADefaultCharacter::Sprinting() {
 	if (CanSprint && !Sprinted)
 	{
-		MaxWalkSpeed = 600;
+		//MaxWalkSpeed = 600.0f;
+		GetCharacterMovement()->MaxWalkSpeed = 1200.0f;
 		Sprinted = true;
 	}
 	else
 	{
-		MaxWalkSpeed = 300;
+		//MaxWalkSpeed = 300.0f;
+		GetCharacterMovement()->MaxWalkSpeed = 600.0f;
 		Sprinted = false;
 	}
 }
 
-bool ALMADefaultCharacter::SprintedFunc() {
+void ALMADefaultCharacter::StaminaLogic() {
+	
+	if (Stamina < 100 && !Sprinted)
+	{
+		Stamina += 0.1;
+	}
 	if (Sprinted)
 	{
-		return true;
+		while (Stamina > 0)
+		{
+			Stamina -= 0.5;
+		}
+	}
+
+	if (Stamina > 5)
+	{
+		CanSprint = true;
 	}
 	else
-		return false;
+	{
+		CanSprint = false;
+		
+	}
+	if (!CanSprint)
+	{
+		//GetCharacterMovement()->MaxWalkSpeed = 600.0f;
+		Sprinted = false;
+	}
+
 }
 

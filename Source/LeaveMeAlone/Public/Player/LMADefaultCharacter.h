@@ -40,7 +40,7 @@ protected:
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "Components")
 	float MaxWalkSpeed = 300.0f;
 
-	UPROPERTY(VisibleAnyWhere, BlueprintReadOnly, Category = "Components")
+	UPROPERTY(EditAnyWhere, BlueprintReadOnly, Category = "Components")
 	bool Sprinted = false;
 	
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "Components")
@@ -55,6 +55,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cursor")
 	FVector CursorSize = FVector(20.0f, 40.0f, 40.0f);
 
+	bool CanSprint = true;
 
 
 	// Called when the game starts or when spawned
@@ -68,15 +69,13 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-		UFUNCTION()
-	bool SprintedFunc();
 
 private:
 
 	float YRotation = -75.0f;
 	float ArmLength = 1400.0f;
 	float FOV = 55.0f;
-	bool CanSprint = true;
+	
 	
 
 
@@ -85,6 +84,7 @@ private:
 	void CameraZoomIn();
 	void CameraZoomOut();
 	void Sprinting();
+	void StaminaLogic();
 
 
 };
