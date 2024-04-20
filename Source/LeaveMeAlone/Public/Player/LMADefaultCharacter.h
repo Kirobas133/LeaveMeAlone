@@ -8,6 +8,8 @@
 
 class UCameraComponent;
 class USpringArmComponent;
+class ULMAHealthComponent;
+class UAnimMontage;
 
 UCLASS()
 class LEAVEMEALONE_API ALMADefaultCharacter : public ACharacter
@@ -18,7 +20,8 @@ public:
 	// Sets default values for this character's properties
 	ALMADefaultCharacter();
 
-
+	UFUNCTION()
+	ULMAHealthComponent* GetHealthComponent() const { return HealthComponent; }  
 
 protected:
 
@@ -58,6 +61,11 @@ protected:
 	UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "Components")
 	bool CanSprint = true;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components|Health")
+	ULMAHealthComponent* HealthComponent;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Animation")
+	UAnimMontage* DeathMontage;
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -87,5 +95,8 @@ private:
 	void Sprinting();
 	void StaminaLogic();
 
+	void OnDeath();
+	void OnHealthChanged(float NewHealth);
 
+	void RotationPlayerOnCursor();
 };
