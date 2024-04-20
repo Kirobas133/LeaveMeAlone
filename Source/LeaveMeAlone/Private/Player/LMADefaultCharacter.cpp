@@ -79,6 +79,7 @@ void ALMADefaultCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	PlayerInputComponent->BindAction("CameraZoomIn", IE_Pressed, this, &ALMADefaultCharacter::CameraZoomIn);
 	PlayerInputComponent->BindAction("CameraZoomOut", IE_Pressed, this, &ALMADefaultCharacter::CameraZoomOut);
 	PlayerInputComponent->BindAction("Sprint", IE_Pressed, this, &ALMADefaultCharacter::Sprinting);
+	PlayerInputComponent->BindAction("Sprint", IE_Released, this, &ALMADefaultCharacter::Sprinting);
 
 }
 
@@ -107,7 +108,10 @@ void ALMADefaultCharacter::CameraZoomOut() {
 }
 
 void ALMADefaultCharacter::Sprinting() {
-	if (CanSprint && !Sprinted && (FVector::DotProduct(ALMADefaultCharacter::GetVelocity(), ALMADefaultCharacter::GetActorRotation().Vector()) > 0))
+	FVector Speed = GetCharacterMovement()->Velocity;
+	float CurrSpeed = Speed.Size();
+	float Direction = GetMesh()->GetAnimInstance()->CalculateDirection(Speed, GetActorRotation());
+	if (CanSprint && !Sprinted && Direction == FMath::Clamp(Direction, -30.f, 30.f) && CurrSpeed != 0)
 	{
 		//MaxWalkSpeed = 600.0f;
 		GetCharacterMovement()->MaxWalkSpeed = 1200.0f;
