@@ -20,6 +20,11 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Weapon")
 	USkeletalMeshComponent* WeaponComponent;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
+	float TraceDistance = 800.0f;
+
+	void Shoot();
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
@@ -27,4 +32,5 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	void Fire();
 };

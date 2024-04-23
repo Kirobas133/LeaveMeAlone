@@ -32,4 +32,6 @@ public:
 	ALMABaseWeapon* Weapon = nullptr;
 
 	void SpawnWeapon();
+	
+	void Fire();
 };
