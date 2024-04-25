@@ -1,8 +1,9 @@
 // Created by Kirobas inc. All Rights Reserved.
 
 
-#include "Weapon/LMABaseWeapon.h"
+
 #include "Components/LMAWeaponComponent.h"
+#include "Weapon/LMABaseWeapon.h"
 #include "GameFramework/Character.h"
 
 

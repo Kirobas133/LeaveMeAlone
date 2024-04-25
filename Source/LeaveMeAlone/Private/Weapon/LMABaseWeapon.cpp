@@ -2,6 +2,9 @@
 
 
 #include "Weapon/LMABaseWeapon.h"
+#include "Components/SkeletalMeshComponent.h"
+
+DEFINE_LOG_CATEGORY_STATIC(LogWeapon, All, All);
 
 // Sets default values
 ALMABaseWeapon::ALMABaseWeapon()
@@ -11,6 +14,9 @@ ALMABaseWeapon::ALMABaseWeapon()
 
 	WeaponComponent = CreateDefaultSubobject<USkeletalMeshComponent>("Weapon");
 	SetRootComponent(WeaponComponent);
+
+	CurrentAmmoWeapon.Bullets = AmmoWeapon.Bullets;
+
 }
 
 // Called when the game starts or when spawned
@@ -45,5 +51,24 @@ void ALMABaseWeapon::Shoot() {
 	{
 		DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 5.0f, 24, FColor::Red, false, 1.0f);
 	}
+	DecrementBullets();
 }
 
+void ALMABaseWeapon::ChangeClip() {
+	CurrentAmmoWeapon.Bullets = AmmoWeapon.Bullets;
+}
+
+bool ALMABaseWeapon::IsCurrentClipEmpty() const 
+{
+	return CurrentAmmoWeapon.Bullets == 0;
+}
+
+void ALMABaseWeapon::DecrementBullets() {
+	CurrentAmmoWeapon.Bullets--;
+	UE_LOG(LogWeapon, Display, TEXT("Bullets = %s"), *FString::FromInt(CurrentAmmoWeapon.Bullets));
+
+	if (IsCurrentClipEmpty())
+	{
+		ChangeClip();
+	}
+}
