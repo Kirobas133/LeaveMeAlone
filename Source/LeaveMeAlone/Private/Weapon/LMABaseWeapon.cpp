@@ -76,10 +76,15 @@ void ALMABaseWeapon::DecrementBullets() {
 
 	if (IsCurrentClipEmpty())
 	{
-		ChangeClip();
+		OnEmptyClipsSignature.Broadcast();
+		//ChangeClip();
 	}
 }
 
 void ALMABaseWeapon::OnTimeToShoot() {
 	Shoot();
+}
+
+bool ALMABaseWeapon::IsClipIsFull() {
+	return (CurrentAmmoWeapon.Bullets == AmmoWeapon.Bullets);
 }

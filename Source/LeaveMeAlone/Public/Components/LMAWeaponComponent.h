@@ -33,6 +33,8 @@ private:
 	void InitAnimNotify();
 	void OnNotifyReloadFinished(USkeletalMeshComponent* SkeletalMesh);
 	bool CanReload() const;
+	void StartReload();
+	
 
 public:	
 	// Called every frame
@@ -48,5 +50,6 @@ public:
 	
 	void Fire();
 	void StopFire();
+	
 	void Reload();
 };
