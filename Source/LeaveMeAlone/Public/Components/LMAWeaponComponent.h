@@ -2,10 +2,12 @@
 
 #pragma once
 
-#include "Weapon/LMABaseWeapon.h"
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "LMAWeaponComponent.generated.h"
+
+class ALMABaseWeapon;
+class UAnimMontage;
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -18,8 +20,19 @@ public:
 	ULMAWeaponComponent();
 
 protected:
+
+	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
+	UAnimMontage* ReloadMontage;
+
 	// Called when the game starts
 	virtual void BeginPlay() override;
+
+private:
+	bool AnimReloading = false;
+
+	void InitAnimNotify();
+	void OnNotifyReloadFinished(USkeletalMeshComponent* SkeletalMesh);
+	bool CanReload() const;
 
 public:	
 	// Called every frame
@@ -34,4 +47,6 @@ public:
 	void SpawnWeapon();
 	
 	void Fire();
+	void StopFire();
+	void Reload();
 };

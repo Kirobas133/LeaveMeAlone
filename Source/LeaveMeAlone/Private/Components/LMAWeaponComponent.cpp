@@ -3,6 +3,7 @@
 
 
 #include "Components/LMAWeaponComponent.h"
+#include "Animations/LMAReloadFinishedAnimNotify.h"
 #include "Weapon/LMABaseWeapon.h"
 #include "GameFramework/Character.h"
 
@@ -25,6 +26,7 @@ void ULMAWeaponComponent::BeginPlay()
 
 	// ...
 	SpawnWeapon();
+	InitAnimNotify();
 }
 
 
@@ -52,6 +54,52 @@ void ULMAWeaponComponent::SpawnWeapon() {
 void ULMAWeaponComponent::Fire() {
 	if (Weapon)
 	{
-		Weapon->Fire();
+		if (Weapon && !AnimReloading)
+		{
+			Weapon->Fire();
+		}
 	}
+}
+
+void ULMAWeaponComponent::InitAnimNotify() {
+	if (!ReloadMontage)
+		return;
+
+	const auto NotifiesEvents = ReloadMontage->Notifies;
+	for (auto NotifyEvent : NotifiesEvents)
+	{
+		auto ReloadFinish = Cast <ULMAReloadFinishedAnimNotify> (NotifyEvent.Notify);
+		if (ReloadFinish)
+		{
+			ReloadFinish->OnNotifyReloadFinished.AddUObject(this, &ULMAWeaponComponent::OnNotifyReloadFinished);
+			break;
+		}
+	}
+}
+
+void ULMAWeaponComponent::OnNotifyReloadFinished(USkeletalMeshComponent* SkeletalMesh) {
+	const auto Character = Cast<ACharacter>(GetOwner());
+	if (Character->GetMesh() == SkeletalMesh)
+	{
+		AnimReloading = false;
+	}
+}
+
+bool ULMAWeaponComponent::CanReload() const {
+	return !AnimReloading;
+}
+
+void ULMAWeaponComponent::Reload() {
+	if (!CanReload())
+		return;
+
+	Weapon->ChangeClip();
+	AnimReloading = true;
+	ACharacter* Character = Cast<ACharacter>(GetOwner());
+	Character->PlayAnimMontage(ReloadMontage);
+
+}
+
+void ULMAWeaponComponent::StopFire() {
+	Weapon->StopFire();
 }

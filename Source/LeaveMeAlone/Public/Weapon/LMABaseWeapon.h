@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Engine/EngineTypes.h"
 #include "GameFramework/Actor.h"
 #include "LMABaseWeapon.generated.h"
 
@@ -41,7 +42,12 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
 	FAmmoWeapon AmmoWeapon{30, 0, true};
 
-	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
+	float ShootFrequency = 0.13;
+
+	FTimerHandle ShooTimerFrequencyHandle;
+
+	void OnTimeToShoot();
 
 	void Shoot();
 	void DecrementBullets();
@@ -55,6 +61,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	void Fire();
+	void StopFire();
 	void ChangeClip();
 
 private:

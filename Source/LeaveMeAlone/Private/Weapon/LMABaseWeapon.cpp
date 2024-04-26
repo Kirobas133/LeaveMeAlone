@@ -2,6 +2,7 @@
 
 
 #include "Weapon/LMABaseWeapon.h"
+#include "TimerManager.h"
 #include "Components/SkeletalMeshComponent.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogWeapon, All, All);
@@ -24,6 +25,7 @@ void ALMABaseWeapon::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	
 }
 
 // Called every frame
@@ -34,7 +36,12 @@ void ALMABaseWeapon::Tick(float DeltaTime)
 }
 
 void ALMABaseWeapon::Fire() {
-	Shoot();
+	//Shoot();
+	GetWorldTimerManager().SetTimer(ShooTimerFrequencyHandle, this, &ALMABaseWeapon::OnTimeToShoot, ShootFrequency, true);
+}
+
+void ALMABaseWeapon::StopFire() {
+	GetWorldTimerManager().ClearTimer(ShooTimerFrequencyHandle);
 }
 
 void ALMABaseWeapon::Shoot() {
@@ -71,4 +78,8 @@ void ALMABaseWeapon::DecrementBullets() {
 	{
 		ChangeClip();
 	}
+}
+
+void ALMABaseWeapon::OnTimeToShoot() {
+	Shoot();
 }
