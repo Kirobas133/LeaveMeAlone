@@ -46,6 +46,9 @@ public:
 	UPROPERTY()
 	ALMABaseWeapon* Weapon = nullptr;
 
+	UFUNCTION(BlueprintCallable)
+	bool GetCurrentWeaponAmmo (FAmmoWeapon& AmmoWeapon) const;
+
 	void SpawnWeapon();
 	
 	void Fire();
