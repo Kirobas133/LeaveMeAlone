@@ -52,6 +52,8 @@ public:
 	void SpawnWeapon();
 	
 	void Fire();
+
+	UFUNCTION(BlueprintCallable)
 	void StopFire();
 	
 	void Reload();

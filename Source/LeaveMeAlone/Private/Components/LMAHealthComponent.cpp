@@ -8,7 +8,7 @@ ULMAHealthComponent::ULMAHealthComponent()
 	PrimaryComponentTick.bCanEverTick = false;
 }
 
-bool ULMAHealthComponent::IsDead() const
+bool ULMAHealthComponent::IsDead() 
 {
 	return Health <= 0.0f;
 }
