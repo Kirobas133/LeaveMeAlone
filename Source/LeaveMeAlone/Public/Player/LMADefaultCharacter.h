@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "LMADefaultCharacter.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnDeathSignature);
+
 class UCameraComponent;
 class USpringArmComponent;
 class ULMAHealthComponent;
@@ -23,6 +25,9 @@ public:
 
 	UFUNCTION()
 	ULMAHealthComponent* GetHealthComponent() const { return HealthComponent; }  
+
+	UPROPERTY(BlueprintAssignable, Category = "Delegates")
+	FOnDeathSignature OnDeathSignature;
 
 protected:
 

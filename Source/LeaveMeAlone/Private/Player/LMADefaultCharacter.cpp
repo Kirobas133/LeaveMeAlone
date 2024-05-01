@@ -186,6 +186,7 @@ void ALMADefaultCharacter::OnDeath()
 	{
 		Controller->ChangeState(NAME_Spectating);
 	}
+	OnDeathSignature.Broadcast();
 }
 
 void ALMADefaultCharacter::OnHealthChanged(float NewHealth)
